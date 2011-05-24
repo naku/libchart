@@ -31,6 +31,11 @@
 	 */
 	abstract class Chart {
 		/**
+		 * The chart configuration.
+		 */
+		protected $config;
+	
+		/**
 		 * The data set.
 		 */
 		protected $dataSet;
@@ -47,6 +52,9 @@
 		 * @param integer height of the image
 		 */
 		protected function Chart($width, $height) {
+			// Initialize the configuration
+			$this->config = new ChartConfig();
+			
 			// Creates the plot
 			$this->plot = new Plot($width, $height);
 			$this->plot->setTitle("Untitled chart");
@@ -79,6 +87,15 @@
 		 */
 		public function setDataSet($dataSet) {
 			$this->dataSet = $dataSet;
+		}
+		
+		/**
+		 * Return the chart configuration.
+		 *
+		 * @return configuration : ChartConfig
+		 */
+		public function getConfig() {
+			return $this->config;
 		}
 		
 		/**

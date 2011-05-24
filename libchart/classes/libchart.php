@@ -17,6 +17,7 @@
 	 * 
 	 */
 
+	require_once 'model/ChartConfig.php';
 	require_once 'model/Point.php';
 	require_once 'model/DataSet.php';
 	require_once 'model/XYDataSet.php';

@@ -121,6 +121,7 @@
 			$maxValue = $this->axis->getUpperBoundary();
 			$stepValue = $this->axis->getTics();
 			
+			// Start from the first color for the first serie
 			$barColorSet = $palette->barColorSet;
 			$barColorSet->reset();
 
@@ -131,10 +132,12 @@
 				$pointCount = count($pointList);
 				reset($pointList);
 				
-				// Get the next color
-				$color = $barColorSet->currentColor();
-				$shadowColor = $barColorSet->currentShadowColor();
-				$barColorSet->next();
+				// Select the next color for the next serie
+				if (!$this->config->getUseMultipleColor()) {
+					$color = $barColorSet->currentColor();
+					$shadowColor = $barColorSet->currentShadowColor();
+					$barColorSet->next();
+				}
 
 				$rowHeight = ($graphArea->y2 - $graphArea->y1) / $pointCount;
 				for ($i = 0; $i < $pointCount; $i++) {
@@ -155,6 +158,13 @@
 					$y1 = $yWithMargin - $barWidth - $barOffset;
 					$y2 = $yWithMargin - $barOffset - 1;
 
+					// Select the next color for the next item in the serie
+					if ($this->config->getUseMultipleColor()) {
+						$color = $barColorSet->currentColor();
+						$shadowColor = $barColorSet->currentShadowColor();
+						$barColorSet->next();
+					}
+						
 					// Text
 					$text->printText($img, $xmax + 5, $y2 - $barWidth / 2, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->VERTICAL_CENTER_ALIGN);
 

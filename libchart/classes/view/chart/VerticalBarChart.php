@@ -116,6 +116,7 @@
 			// Get the graph area
 			$graphArea = $this->plot->getGraphArea();
 
+			// Start from the first color for the first serie
 			$barColorSet = $palette->barColorSet;
 			$barColorSet->reset();
 
@@ -130,10 +131,12 @@
 				$pointCount = count($pointList);
 				reset($pointList);
 
-				// Get the next color
-				$color = $barColorSet->currentColor();
-				$shadowColor = $barColorSet->currentShadowColor();
-				$barColorSet->next();
+				// Select the next color for the next serie
+				if (!$this->config->getUseMultipleColor()) {
+					$color = $barColorSet->currentColor();
+					$shadowColor = $barColorSet->currentShadowColor();
+					$barColorSet->next();
+				}
 
 				$columnWidth = ($graphArea->x2 - $graphArea->x1) / $pointCount;
 				for ($i = 0; $i < $pointCount; $i++) {
@@ -154,6 +157,13 @@
 					$x1 = $xWithMargin + $barOffset;
 					$x2 = $xWithMargin + $barWidth + $barOffset - 1;
 
+					// Select the next color for the next item in the serie
+					if ($this->config->getUseMultipleColor()) {
+						$color = $barColorSet->currentColor();
+						$shadowColor = $barColorSet->currentShadowColor();
+						$barColorSet->next();
+					}
+						
 					// Text
 					$text->printText($img, $x1 + $barWidth / 2 , $ymin - 5, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
 
