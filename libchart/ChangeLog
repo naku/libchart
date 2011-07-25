@@ -6,7 +6,8 @@ Libchart ChangeLog
 VERSION 1.3: (2011-XX-XX)
 ==========
   FEATURES:
-    * Customized palette on Horizontal and Vertical Bar charts    
+    * Customized palette on Horizontal and Vertical Bar charts.
+    * Turn off text caption on individual data points.
     
   BUGFIXES:
 

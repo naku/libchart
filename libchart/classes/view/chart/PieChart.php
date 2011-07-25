@@ -238,7 +238,9 @@
             $this->drawDisc($this->pieCenterY - $this->pieDepth / 2, $palette->pieColorSet->colorList, IMG_ARC_PIE);
 
             // Top Outline
-            $this->drawPercent();
+            if ($this->config->getShowPointCaption()) {
+                $this->drawPercent();
+            }
         }
 
         /**

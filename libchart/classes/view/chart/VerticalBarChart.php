@@ -164,10 +164,12 @@
                         $barColorSet->next();
                     }
                         
-                    // Text
-                    $text->printText($img, $x1 + $barWidth / 2 , $ymin - 5, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
+                    // Draw caption text on bar
+                    if ($this->config->getShowPointCaption()) {
+                        $text->printText($img, $x1 + $barWidth / 2 , $ymin - 5, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
+                    }
 
-                    // Vertical bar
+                    // Draw the vertical bar
                     imagefilledrectangle($img, $x1, $ymin, $x2, $graphArea->y2 - 1, $shadowColor->getColor($img));
 
                     // Prevents drawing a small box when y = 0

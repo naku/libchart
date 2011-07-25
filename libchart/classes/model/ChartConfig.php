@@ -31,10 +31,18 @@
         private $useMultipleColor;
         
         /**
-         * Creates a new ChartConfig.
+         * Show caption on individual data points.
+         * 
+         * @var Boolean
+         */
+        private $showPointCaption;
+        
+        /**
+         * Creates a new ChartConfig with default options.
          */
         public function ChartConfig() {
             $this->useMultipleColor = false;
+            $this->showPointCaption = true;
         }
         
         /**
@@ -57,5 +65,22 @@
             return $this->useMultipleColor;
         }
         
+        /**
+         * Set the option to show caption on individual data points.
+         * 
+         * @param $showPointCaption Show caption on individual data points : boolean
+         */
+        public function setShowPointCaption($showPointCaption) {
+            $this->showPointCaption = $showPointCaption;
+        }
+        
+        /**
+         * Get the option to show caption on individual data points.
+         * 
+         * @return Show caption on individual data points : boolean
+         */
+        public function getShowPointCaption() {
+            return $this->showPointCaption;
+        }
     }
 ?>
