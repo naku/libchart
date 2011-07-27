@@ -38,11 +38,19 @@
         private $showPointCaption;
         
         /**
+         * Sort data points (only pie charts).
+         * 
+         * @var Boolean
+         */
+        private $sortDataPoint;
+        
+        /**
          * Creates a new ChartConfig with default options.
          */
         public function ChartConfig() {
             $this->useMultipleColor = false;
             $this->showPointCaption = true;
+            $this->sortDataPoint = true;
         }
         
         /**
@@ -81,6 +89,24 @@
          */
         public function getShowPointCaption() {
             return $this->showPointCaption;
+        }
+        
+        /**
+         * Set the option to sort data points (only pie charts).
+         * 
+         * @param $sortDataPoint Sort data points : boolean
+         */
+        public function setSortDataPoint($sortDataPoint) {
+            $this->sortDataPoint = $sortDataPoint;
+        }
+        
+        /**
+         * Get the option to sort data points (only pie charts).
+         * 
+         * @return Sort data points : boolean
+         */
+        public function getSortDataPoint() {
+            return $this->sortDataPoint;
         }
     }
 ?>

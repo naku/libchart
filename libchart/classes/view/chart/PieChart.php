@@ -87,7 +87,10 @@
                 array_push($this->percent, array($percent, $point));
             }
 
-            usort($this->percent, array("PieChart", "sortPie"));
+            // Sort data points
+            if ($this->config->getSortDataPoint()) {
+                usort($this->percent, array("PieChart", "sortPie"));
+            }
         }
 
         /**
