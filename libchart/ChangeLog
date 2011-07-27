@@ -3,11 +3,12 @@ Libchart ChangeLog
 (C) 2005-2011 Jean-Marc Trémeaux
 
 
-VERSION 1.3: (2011-XX-XX)
+VERSION 1.3: (2011-07-27)
 ==========
   FEATURES:
     * Customized palette on Horizontal and Vertical Bar charts.
-    * Turn off text caption on individual data points.
+    * Add an option to turn off text caption on individual data points.
+    * Add an option to disable sorting (preserve data points order).
     
   BUGFIXES:
     * Issue #2: DejaVu Fonts don't include license
