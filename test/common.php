@@ -1,3 +1,3 @@
 <?php
-	require_once '../../libchart/classes/libchart.php';
+  require_once '../../libchart/classes/libchart.php';
 ?>
