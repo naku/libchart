@@ -52,7 +52,7 @@
         }
         
         /**
-         * Print the horizontal and veritcal axis.
+         * Print the horizontal and vertical axis.
          */
         protected function printAxis() {
             $minValue = $this->axis->getLowerBoundary();
