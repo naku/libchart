@@ -68,6 +68,8 @@
             $graphArea = $this->plot->getGraphArea();
             
             // Vertical axis
+            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y1, $graphArea->x1, $graphArea->y2, $palette->axisColor[0]->getColor($img));
+            
             for ($value = $minValue; $value <= $maxValue; $value += $stepValue) {
                 $y = $graphArea->y2 - ($value - $minValue) * ($graphArea->y2 - $graphArea->y1) / ($this->axis->displayDelta);
 
@@ -84,11 +86,15 @@
             $pointCount = count($pointList);
             reset($pointList);
             $columnWidth = ($graphArea->x2 - $graphArea->x1) / $pointCount;
+            $horizOriginY = $graphArea->y2 + $minValue * ($graphArea->y2 - $graphArea->y1) / ($this->axis->displayDelta);
+            
+            imagerectangle($img, $graphArea->x1 - 1, $horizOriginY, $graphArea->x2, $horizOriginY + 1, $palette->axisColor[0]->getColor($img));
+            
             for ($i = 0; $i <= $pointCount; $i++) {
                 $x = $graphArea->x1 + $i * $columnWidth;
 
-                imagerectangle($img, $x - 1, $graphArea->y2 + 2, $x, $graphArea->y2 + 3, $palette->axisColor[0]->getColor($img));
-                imagerectangle($img, $x - 1, $graphArea->y2, $x, $graphArea->y2 + 1, $palette->axisColor[1]->getColor($img));
+                imagerectangle($img, $x - 1, $horizOriginY + 2, $x, $horizOriginY + 3, $palette->axisColor[0]->getColor($img));
+                imagerectangle($img, $x - 1, $horizOriginY, $x, $horizOriginY + 1, $palette->axisColor[1]->getColor($img));
 
                 if ($i < $pointCount) {
                     $point = current($pointList);
@@ -123,14 +129,16 @@
             $minValue = $this->axis->getLowerBoundary();
             $maxValue = $this->axis->getUpperBoundary();
             $stepValue = $this->axis->getTics();
-
+            
+            $horizOriginY = $graphArea->y2 + $minValue * ($graphArea->y2 - $graphArea->y1) / ($this->axis->displayDelta);
+            
             $serieCount = count($serieList);
             for ($j = 0; $j < $serieCount; $j++) {
                 $serie = $serieList[$j];
                 $pointList = $serie->getPointList();
                 $pointCount = count($pointList);
                 reset($pointList);
-
+                
                 // Select the next color for the next serie
                 if (!$this->config->getUseMultipleColor()) {
                     $color = $barColorSet->currentColor();
@@ -164,17 +172,17 @@
                         $barColorSet->next();
                     }
                         
-                    // Draw caption text on bar
-                    if ($this->config->getShowPointCaption()) {
-                        $text->printText($img, $x1 + $barWidth / 2 , $ymin - 5, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
-                    }
-
                     // Draw the vertical bar
-                    imagefilledrectangle($img, $x1, $ymin, $x2, $graphArea->y2 - 1, $shadowColor->getColor($img));
+                    imagefilledrectangle($img, $x1, $ymin, $x2, $horizOriginY + ($value >= 0 ? - 1 : 2), $shadowColor->getColor($img));
 
                     // Prevents drawing a small box when y = 0
-                    if ($ymin != $graphArea->y2) {
-                        imagefilledrectangle($img, $x1 + 1, $ymin + 1, $x2 - 4, $graphArea->y2 - 1, $color->getColor($img));
+                    if ($value != 0) {
+                        imagefilledrectangle($img, $x1 + 1, $ymin + ($value > 0 ? 1 : 0), $x2 - 4, $horizOriginY + ($value >= 0 ? - 1 : 2), $color->getColor($img));
+                    }
+
+                    // Draw caption text on bar
+                    if ($this->config->getShowPointCaption()) {
+                        $text->printText($img, $x1 + $barWidth / 2 , ($value > 0 ? $ymin - 5 : $ymin + 15), $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
                     }
                 }
             }

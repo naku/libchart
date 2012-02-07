@@ -69,10 +69,6 @@
                 $color = $palette->backgroundColor[($i + 3) % 4];
                 $primitive->line($graphArea->x1, $i, $graphArea->x2, $i, $color);
             }
-
-            // Axis
-            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y1, $graphArea->x1, $graphArea->y2, $palette->axisColor[0]->getColor($img));
-            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y2, $graphArea->x2, $graphArea->y2 + 1, $palette->axisColor[0]->getColor($img));
         }
 
         /**

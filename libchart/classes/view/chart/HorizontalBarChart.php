@@ -68,6 +68,8 @@
             $graphArea = $this->plot->getGraphArea();
 
             // Horizontal axis
+            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y2, $graphArea->x2, $graphArea->y2 + 1, $palette->axisColor[0]->getColor($img));
+            
             for ($value = $minValue; $value <= $maxValue; $value += $stepValue) {
                 $x = $graphArea->x1 + ($value - $minValue) * ($graphArea->x2 - $graphArea->x1) / ($this->axis->displayDelta);
 
@@ -85,6 +87,9 @@
             reset($pointList);
             $rowHeight = ($graphArea->y2 - $graphArea->y1) / $pointCount;
             reset($pointList);
+
+            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y1, $graphArea->x1, $graphArea->y2, $palette->axisColor[0]->getColor($img));
+            
             for ($i = 0; $i <= $pointCount; $i++) {
                 $y = $graphArea->y2 - $i * $rowHeight;
 
