@@ -88,13 +88,15 @@
             $rowHeight = ($graphArea->y2 - $graphArea->y1) / $pointCount;
             reset($pointList);
 
-            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y1, $graphArea->x1, $graphArea->y2, $palette->axisColor[0]->getColor($img));
+            $verticalOriginX = $graphArea->x1 - $minValue * ($graphArea->x2 - $graphArea->x1) / ($this->axis->displayDelta);
+            
+            imagerectangle($img, $verticalOriginX - 1, $graphArea->y1, $verticalOriginX, $graphArea->y2, $palette->axisColor[0]->getColor($img));
             
             for ($i = 0; $i <= $pointCount; $i++) {
                 $y = $graphArea->y2 - $i * $rowHeight;
 
-                imagerectangle($img, $graphArea->x1 - 3, $y, $graphArea->x1 - 2, $y + 1, $palette->axisColor[0]->getColor($img));
-                imagerectangle($img, $graphArea->x1 - 1, $y, $graphArea->x1, $y + 1, $palette->axisColor[1]->getColor($img));
+                imagerectangle($img, $verticalOriginX - 3, $y, $verticalOriginX - 2, $y + 1, $palette->axisColor[0]->getColor($img));
+                imagerectangle($img, $verticalOriginX - 1, $y, $verticalOriginX, $y + 1, $palette->axisColor[1]->getColor($img));
 
                 if ($i < $pointCount) {
                     $point = current($pointList);
@@ -125,6 +127,8 @@
             $minValue = $this->axis->getLowerBoundary();
             $maxValue = $this->axis->getUpperBoundary();
             $stepValue = $this->axis->getTics();
+            
+            $verticalOriginX = $graphArea->x1 - $minValue * ($graphArea->x2 - $graphArea->x1) / ($this->axis->displayDelta);
             
             // Start from the first color for the first serie
             $barColorSet = $palette->barColorSet;
@@ -170,17 +174,17 @@
                         $barColorSet->next();
                     }
                         
-                    // Draw caption text on bar
-                    if ($this->config->getShowPointCaption()) {
-                        $text->printText($img, $xmax + 5, $y2 - $barWidth / 2, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->VERTICAL_CENTER_ALIGN);
-                    }
-                    
                     // Draw the horizontal bar
-	                imagefilledrectangle($img, $graphArea->x1 + 1, $y1, $xmax, $y2, $shadowColor->getColor($img));
+	                imagefilledrectangle($img, $verticalOriginX + ($value >= 0 ? 1 : -2), $y1, $xmax, $y2, $shadowColor->getColor($img));
                     
 	                // Prevents drawing a small box when x = 0
-                    if ($graphArea->x1 != $xmax) {
-                        imagefilledrectangle($img, $graphArea->x1 + 2, $y1 + 1, $xmax - 4, $y2, $color->getColor($img));
+                    if ($value != 0) {
+                        imagefilledrectangle($img, $verticalOriginX + ($value >= 0 ? 2 : -2), $y1 + 1, $xmax + ($value >= 0 ? - 4 : -0), $y2, $color->getColor($img));
+                    }
+
+                    // Draw caption text on bar
+                    if ($this->config->getShowPointCaption()) {
+                        $text->printText($img, $xmax + ($value > 0 ? 5 : -10), $y2 - $barWidth / 2, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->VERTICAL_CENTER_ALIGN | ($value > 0 ? $text->HORIZONTAL_LEFT_ALIGN : $text->HORIZONTAL_RIGHT_ALIGN));
                     }
                 }
             }
