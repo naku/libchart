@@ -63,6 +63,8 @@
             $graphArea = $this->plot->getGraphArea();
             
             // Vertical axis
+            imagerectangle($img, $graphArea->x1 - 1, $graphArea->y1, $graphArea->x1, $graphArea->y2, $palette->axisColor[0]->getColor($img));
+            
             for ($value = $minValue; $value <= $maxValue; $value += $stepValue) {
                 $y = $graphArea->y2 - ($value - $minValue) * ($graphArea->y2 - $graphArea->y1) / ($this->axis->displayDelta);
 
@@ -79,7 +81,10 @@
             $pointCount = count($pointList);
             reset($pointList);
             $columnWidth = ($graphArea->x2 - $graphArea->x1) / ($pointCount - 1);
-
+            $horizOriginY = $graphArea->y2 + $minValue * ($graphArea->y2 - $graphArea->y1) / ($this->axis->displayDelta);
+            
+            imagerectangle($img, $graphArea->x1 - 1, $horizOriginY, $graphArea->x2, $horizOriginY + 1, $palette->axisColor[0]->getColor($img));
+            
             for ($i = 0; $i < $pointCount; $i++) {
                 $x = $graphArea->x1 + $i * $columnWidth;
 
