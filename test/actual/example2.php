@@ -11,6 +11,7 @@
     $dataSet->addPoint(new Point("/wiki/World_Wide_Web", 142));
     $chart->setDataSet($dataSet);
     
-    $chart->setTitle("Most visited pages for www.example.com");
+	$chart->getPlot()->setGraphPadding(new Padding(5, 30, 20, 140));
+	$chart->setTitle("Most visited pages for www.example.com");
     $chart->render();
 ?>
