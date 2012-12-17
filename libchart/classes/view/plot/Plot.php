@@ -347,7 +347,7 @@
          * @param integer Outer padding value in pixels
          */
         public function getOuterPadding() {
-            return $outerPadding;
+            return $this->outerPadding;
         }
 
         /**
