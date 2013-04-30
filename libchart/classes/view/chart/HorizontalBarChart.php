@@ -1,6 +1,6 @@
 <?php
     /* Libchart - PHP chart library
-     * Copyright (C) 2005-2011 Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+     * Copyright (C) 2005-2011 Jean-Marc Trï¿½meaux (jm.tremeaux at gmail.com)
      * 
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
     /**
      * Horizontal bar chart
      *
-     * @author Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+     * @author Jean-Marc Trï¿½meaux (jm.tremeaux at gmail.com)
      */
     class HorizontalBarChart extends BarChart {
         /**
@@ -66,7 +66,9 @@
             
             // Get the graph area
             $graphArea = $this->plot->getGraphArea();
-
+            
+            $labelGenerator = $this->plot->getLabelGenerator();
+            
             // Horizontal axis
             imagerectangle($img, $graphArea->x1 - 1, $graphArea->y2, $graphArea->x2, $graphArea->y2 + 1, $palette->axisColor[0]->getColor($img));
             
@@ -76,7 +78,8 @@
                 imagerectangle($img, $x - 1, $graphArea->y2 + 2, $x, $graphArea->y2 + 3, $palette->axisColor[0]->getColor($img));
                 imagerectangle($img, $x - 1, $graphArea->y2, $x, $graphArea->y2 + 1, $palette->axisColor[1]->getColor($img));
 
-                $text->printText($img, $x, $graphArea->y2 + 5, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN);
+                $label = $labelGenerator->generateLabel($value);
+                $text->printText($img, $x, $graphArea->y2 + 5, $this->plot->getTextColor(), $label, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN);
             }
 
             // Get first serie of a list
@@ -124,6 +127,8 @@
             // Get the graph area
             $graphArea = $this->plot->getGraphArea();
 
+            $labelGenerator = $this->plot->getLabelGenerator();
+            
             $minValue = $this->axis->getLowerBoundary();
             $maxValue = $this->axis->getUpperBoundary();
             $stepValue = $this->axis->getTics();
@@ -184,7 +189,8 @@
 
                     // Draw caption text on bar
                     if ($this->config->getShowPointCaption()) {
-                        $text->printText($img, $xmax + ($value > 0 ? 5 : -10), $y2 - $barWidth / 2, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->VERTICAL_CENTER_ALIGN | ($value > 0 ? $text->HORIZONTAL_LEFT_ALIGN : $text->HORIZONTAL_RIGHT_ALIGN));
+                        $label = $labelGenerator->generateLabel($value);
+                        $text->printText($img, $xmax + ($value > 0 ? 5 : -10), $y2 - $barWidth / 2, $this->plot->getTextColor(), $label, $text->fontCondensed, $text->VERTICAL_CENTER_ALIGN | ($value > 0 ? $text->HORIZONTAL_LEFT_ALIGN : $text->HORIZONTAL_RIGHT_ALIGN));
                     }
                 }
             }

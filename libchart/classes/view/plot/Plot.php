@@ -1,6 +1,6 @@
 <?php
     /* Libchart - PHP chart library
-     * Copyright (C) 2005-2011 Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+     * Copyright (C) 2005-2011 Jean-Marc Trï¿½meaux (jm.tremeaux at gmail.com)
      * 
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
      *
      * All area dimensions are known in advance , and the optional logo is drawn in absolute coordinates.
      *
-     * @author Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+     * @author Jean-Marc Trï¿½meaux (jm.tremeaux at gmail.com)
      * Created on 27 july 2007
      */
     class Plot {
@@ -127,6 +127,11 @@
         protected $palette;
         
         /**
+         * Label generator.
+         */
+        protected $labelGenerator;
+        
+        /**
          * GD image
          */
         protected $img;
@@ -151,6 +156,7 @@
 
             $this->text = new Text();
             $this->palette = new Palette();
+            $this->labelGenerator = new DefaultLabelGenerator();
             
             // Default layout
             $this->outputArea = new Rectangle(0, 0, $width - 1, $height - 1);
@@ -411,6 +417,24 @@
          */
         public function setGraphCaptionRatio($graphCaptionRatio) {
             $this->graphCaptionRatio = $graphCaptionRatio;
+        }
+
+        /**
+         * Return the label generator.
+         *
+         * @return Label generator
+         */
+        public function getLabelGenerator() {
+            return $this->labelGenerator;
+        }
+        
+        /**
+         * Set the label generator.
+         *
+         * @param LabelGenerator Label generator
+         */
+        public function setLabelGenerator($labelGenerator) {
+            $this->labelGenerator = $labelGenerator;
         }
 
         /**

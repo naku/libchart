@@ -1,6 +1,6 @@
 <?php
     /* Libchart - PHP chart library
-     * Copyright (C) 2005-2011 Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+     * Copyright (C) 2005-2011 Jean-Marc Trï¿½meaux (jm.tremeaux at gmail.com)
      * 
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
     /**
      * Chart composed of vertical bars.
      *
-     * @author Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+     * @author Jean-Marc Trï¿½meaux (jm.tremeaux at gmail.com)
      */
     class VerticalBarChart extends BarChart {
         /**
@@ -67,6 +67,8 @@
             // Get the graph area
             $graphArea = $this->plot->getGraphArea();
             
+            $labelGenerator = $this->plot->getLabelGenerator();
+            
             // Vertical axis
             imagerectangle($img, $graphArea->x1 - 1, $graphArea->y1, $graphArea->x1, $graphArea->y2, $palette->axisColor[0]->getColor($img));
             
@@ -76,7 +78,8 @@
                 imagerectangle($img, $graphArea->x1 - 3, $y, $graphArea->x1 - 2, $y + 1, $palette->axisColor[0]->getColor($img));
                 imagerectangle($img, $graphArea->x1 - 1, $y, $graphArea->x1, $y + 1, $palette->axisColor[1]->getColor($img));
 
-                $text->printText($img, $graphArea->x1 - 5, $y, $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_RIGHT_ALIGN | $text->VERTICAL_CENTER_ALIGN);
+                $label = $labelGenerator->generateLabel($value);
+                $text->printText($img, $graphArea->x1 - 5, $y, $this->plot->getTextColor(), $label, $text->fontCondensed, $text->HORIZONTAL_RIGHT_ALIGN | $text->VERTICAL_CENTER_ALIGN);
             }
 
             // Get first serie of a list
@@ -122,6 +125,8 @@
             // Get the graph area
             $graphArea = $this->plot->getGraphArea();
 
+            $labelGenerator = $this->plot->getLabelGenerator();
+            
             // Start from the first color for the first serie
             $barColorSet = $palette->barColorSet;
             $barColorSet->reset();
@@ -182,7 +187,8 @@
 
                     // Draw caption text on bar
                     if ($this->config->getShowPointCaption()) {
-                        $text->printText($img, $x1 + $barWidth / 2 , ($value > 0 ? $ymin - 5 : $ymin + 15), $this->plot->getTextColor(), $value, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
+                        $label = $labelGenerator->generateLabel($value);
+                        $text->printText($img, $x1 + $barWidth / 2 , ($value > 0 ? $ymin - 5 : $ymin + 15), $this->plot->getTextColor(), $label, $text->fontCondensed, $text->HORIZONTAL_CENTER_ALIGN | $text->VERTICAL_BOTTOM_ALIGN);
                     }
                 }
             }
