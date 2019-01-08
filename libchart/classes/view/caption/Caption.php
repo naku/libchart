@@ -39,7 +39,7 @@
         /**
          * Constructor of Caption
          */
-        public function Caption() {
+        public function __construct() {
             $this->labelBoxWidth = 15;
             $this->labelBoxHeight = 15;
         }
