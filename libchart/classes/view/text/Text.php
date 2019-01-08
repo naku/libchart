@@ -33,7 +33,7 @@
         /**
          * Creates a new text drawing helper.
          */
-        public function Text() {
+        public function __construct() {
             $baseDir = dirname(__FILE__) . "/../../../";
         
             // Free low-res fonts based on Bitstream Vera <http://dejavu.sourceforge.net/wiki/>
