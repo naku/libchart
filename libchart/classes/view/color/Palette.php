@@ -37,7 +37,7 @@
         /**
          * Palette constructor.
          */
-        public function Palette() {
+        public function __construct() {
             $this->red = new Color(255, 0, 0);
         
             // Set the colors for the horizontal and vertical axis
