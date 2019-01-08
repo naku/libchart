@@ -30,8 +30,8 @@
          * @param integer width of the image
          * @param integer height of the image
          */
-        public function LineChart($width = 600, $height = 250) {
-            parent::BarChart($width, $height);
+        public function __construct($width = 600, $height = 250) {
+            parent::__construct($width, $height);
 
             $this->plot->setGraphPadding(new Padding(5, 30, 50, 50));
         }
