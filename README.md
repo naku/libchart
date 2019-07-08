@@ -1,3 +1,9 @@
+Project discontinued
+====================
+
+I'm sorry to say that I don't have sufficient interest in continuing to develop Libchart, and I'm no longer supporting it. 
+
+
 Libchart - Simple PHP chart drawing library
 ===========================================
 
