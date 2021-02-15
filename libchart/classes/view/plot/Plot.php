@@ -150,7 +150,7 @@
          * @param integer width of the image
          * @param integer height of the image
          */
-        public function Plot($width, $height) {
+        public function __construct($width, $height) {
             $this->width = $width;
             $this->height = $height;
 
